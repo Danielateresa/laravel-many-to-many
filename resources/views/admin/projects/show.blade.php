@@ -16,6 +16,18 @@
         <h4>Type: </h4>
         <p>{{$project->type ? $project->type->name : 'No type'}}</p>
         <!-- c'è una tipologia assegnata? se si, mostra il nome, altrimenti No type -->
+        <h4>Technologies: </h4>
+        <!-- se le tecnologie nella lista sono più di 0 le mostro -->
+        @if(count($project->technologies) > 0)
+        <!-- per ogni tecnologia assegnata mostro in nome -->
+        @foreach($project->technologies as $technology)
+        <p>{{$technology->name}}</p>
+        @endforeach
+
+        @else
+        <p>No technology assigned for this project</p>
+        @endif
+
         <h4>Project description: </h4>
         <p>{{$project->description}}</p>
     </div>
