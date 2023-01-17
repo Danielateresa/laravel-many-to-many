@@ -25,7 +25,7 @@ class StoreTypeRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:types',
-           
+            'slug'=> 'required'
         ];
     }
 }
