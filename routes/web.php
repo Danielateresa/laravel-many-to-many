@@ -25,6 +25,9 @@ Route::middleware('auth', 'verified')->name('admin.')->prefix('admin')->group(fu
     Route::resource('projects', ProjectController::class)->parameters([
         'projects'=> 'project:slug'
     ]);
+
+    Route::resource('types', ProjectController::class)->parameters([
+        'types'=> 'type:slug'])->except(['show','create','edit',]); //creo le view eccetto show, create e edit, poichè non mi servono
 });
 
 require __DIR__.'/auth.php';
