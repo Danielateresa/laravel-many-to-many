@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Type;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreTypeRequest;
 
 class TypeController extends Controller
 {
@@ -15,7 +16,8 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+        $types = Type::all();
+        return view('admin.types.index', compact('types'));
     }
 
     /**
@@ -34,9 +36,17 @@ class TypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTypeRequest $request)
     {
-        //
+        $validated_data = $request->validated();
+        //type slug
+        $type_slug = Type::createTypeSlug($validated_data['name']);
+
+        $validated_data['slug'] = $type_slug;
+
+        $type = Type::create($validated_data);
+
+        return to_route('admin.types.index')->with('message', "New project type $type->name added");
     }
 
     /**
@@ -81,6 +91,7 @@ class TypeController extends Controller
      */
     public function destroy(Type $type)
     {
-        //
+        $type->delete();
+        return to_route('admin.types.index')->with('message', " Project $type->name deleted");
     }
 }
