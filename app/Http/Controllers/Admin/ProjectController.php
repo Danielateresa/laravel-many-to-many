@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Models\Type;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
+use App\Models\Technology;
 
 use Illuminate\Support\Facades\Storage;
 
@@ -20,6 +21,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::orderByDesc('id')->get();
+        $technologies = Technology::all();
         //dd($projects);
         return view('admin.projects.index', compact('projects'));
     }
