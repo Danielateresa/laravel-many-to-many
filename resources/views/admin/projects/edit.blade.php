@@ -68,6 +68,31 @@
 
 
     <div class="mb-3">
+        <label for="technologies" class="form-label">Technologies</label>
+        <select multiple class="form-select form-select-lg" name="technologies[]" id="technologies">
+            <option value="" disabled>Select one or more technologies</option>
+            @forelse($technologies as $technology)
+            @if($errors->any())
+            <option value="{{$technology->id}}"
+                {{ in-array($technology->id, old('technologies', [])) ? 'selected' : '' }}>{{$technology->name}}
+                <!-- in caso di errore validazione controlla se ci sono technologie selezionate, se erano state selezionate prima della validazione o se non c'è selezione -->
+            </option>
+            @else
+            <option value="{{$technology->id}}" {{$project->technologies->contains($technology->id) ? 'selected' : ''}}>
+                {{$technology->name}}</option>
+            <!-- se erano già assegnate delle tecnologie, selezionale, altrimenti no -->
+            @endif
+            @empty
+            <option value="" disabled>No technology to select yet. Create one or more.</option>
+            @endforelse
+        </select>
+    </div>
+    @error('technologies')
+    <div class="alert alert-danger">{{$message}}</div>
+    @enderror
+
+
+    <div class="mb-3">
         <label for="description" class="form-label">Description</label>
         <textarea name="description" id="description" class="form-control @error('description') is-invalid @enderror"
             placeholder="" aria-describedby="helpId">{{ old('description', $project->description) }}</textarea>

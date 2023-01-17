@@ -95,7 +95,8 @@ class ProjectController extends Controller
     {
 
         $types = Type::all();
-        return view('admin.projects.edit', compact('project','types'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project','types', 'technologies'));
     }
 
     /**
@@ -125,6 +126,13 @@ class ProjectController extends Controller
 
         $validated_data['slug'] = $project_slug;
         $project->update($validated_data);
+
+        //tramite questa condizione sicronizzo le tecnologie aggiunte se presenti
+        if($request->has('technologies')){
+            $project->technologies()->sync($validated_data['technologies']);
+        }else{
+            $project->technologies()->sync([]);
+        }
 
         return to_route('admin.projects.index')->with('message', " Project $project->title modified");
     }
