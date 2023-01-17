@@ -73,7 +73,7 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Do you want to delete {{$type->name}} project permanentely?
+                                                Do you want to delete {{$type->name}} type permanentely?
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
