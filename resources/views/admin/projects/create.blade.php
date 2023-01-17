@@ -64,8 +64,9 @@
             <option value="" disabled>Select one or more technologies</option>
             @forelse($technologies as $technology)
             @if($errors->any())
-            <option value="{{$technology->id}}">{{$technology->name}}
-                <!-- mettere condizione -->
+            <option value="{{$technology->id}}"
+                {{ in-array($technology->id, old('technologies', [])) ? 'selected' : '' }}>{{$technology->name}}
+                <!-- in caso di errore validazione controlla se ci sono technologie selezionate, se erano state selezionate prima della validazione o se non c'è selezione -->
             </option>
             @else
             <option value="{{$technology->id}}">{{$technology->name}}</option>
@@ -75,7 +76,7 @@
             @endforelse
         </select>
     </div>
-    @error('type_id')
+    @error('technologies')
     <div class="alert alert-danger">{{$message}}</div>
     @enderror
 
