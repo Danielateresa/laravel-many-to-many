@@ -34,8 +34,9 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
+        $technologies = Technology::all();
         //dd($types);
-        return view('admin.projects.create', compact('types'));
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -62,7 +63,12 @@ class ProjectController extends Controller
         $project_slug = Project::createSlug($validated_data['title']);
 
         $validated_data['slug'] = $project_slug;
-        Project::create($validated_data);
+
+        $project = Project::create($validated_data);
+
+        if($request->has('technologies')){
+            $project->technologies()->attach($validated_data['technologies']);
+        }
 
         return to_route('admin.projects.index')->with('message', 'New Project added');
     }

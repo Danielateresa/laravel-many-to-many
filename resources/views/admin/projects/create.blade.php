@@ -47,10 +47,32 @@
         <label for="type_id" class="form-label">Types</label>
         <select class="form-select form-select-lg @error('type_id') is-invalid @enderror" name="type_id" id="type_id">
 
-            <option selected>Select Type</option>
+            <option value="" selected>Select Type</option>
             @foreach($types as $type)
             <option value="{{$type->id}}" {{ old('type_id') == $type->id ? 'selected' : '' }}>{{$type->name}}</option>
             @endforeach
+        </select>
+    </div>
+    @error('type_id')
+    <div class="alert alert-danger">{{$message}}</div>
+    @enderror
+
+
+    <div class="mb-3">
+        <label for="technologies" class="form-label">Technologies</label>
+        <select multiple class="form-select form-select-lg" name="technologies[]" id="technologies">
+            <option value="" disabled>Select one or more technologies</option>
+            @forelse($technologies as $technology)
+            @if($errors->any())
+            <option value="{{$technology->id}}">{{$technology->name}}
+                <!-- mettere condizione -->
+            </option>
+            @else
+            <option value="{{$technology->id}}">{{$technology->name}}</option>
+            @endif
+            @empty
+            <option value="" disabled>No technology to select yet. Create one or more.</option>
+            @endforelse
         </select>
     </div>
     @error('type_id')
