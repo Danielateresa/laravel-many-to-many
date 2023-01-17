@@ -3,30 +3,38 @@
 @section('content')
 
 <div class="top_content d-flex">
-    <h1 class="py-3">Projects</h1>
-    <a href="{{route('admin.projects.create')}}" class="btn btn-primary ms-auto align-self-center">Add Project</a>
+    <h1 class="py-3">Projects types panel</h1>
 </div>
 
-@if(session('message'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 
-    <strong>{{session('message')}}</strong>
-</div>
-@endif
-
-<div class="container">
+<div class="container pt-4">
     <div class="row">
         <div class="col-md-6">
+            <h3 class="pb-4">Create a new project Type</h3>
+            <form class="" action="{{route('admin.types.store')}}" method="post">
+                @csrf
+                <div class="input-group mb-3" mt-4"">
+                    <input id="name" name="name" type="text" class="form-control" placeholder="type name"
+                        aria-label="Type name" aria-describedby="basic-addon">
+                    <button class="btn btn-secondary" type="submit">add type</button>
+                </div>
+            </form>
 
         </div>
         <div class="col-md-6">
+            @if(session('message'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+                <strong>{{session('message')}}</strong>
+            </div>
+            @endif
             <div class="table-responsive">
                 <table class="table table-striped
-    table-hover	
-    table-borderless
-    table-primary
-    align-middle">
+                    table-hover	
+                    table-borderless
+                    table-primary
+                    align-middle">
                     <thead class="table-light">
                         <tr>
                             <th>id</th>
