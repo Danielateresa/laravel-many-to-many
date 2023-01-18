@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="top_content d-flex">
-    <h1 class="py-3">Projects types panel</h1>
+    <h1 class="py-3">Project types panel</h1>
 </div>
 
 
