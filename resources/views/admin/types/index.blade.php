@@ -14,10 +14,14 @@
             <form class="" action="{{route('admin.types.store')}}" method="post">
                 @csrf
                 <div class="input-group mb-3" mt-4"">
-                    <input id="name" name="name" type="text" class="form-control" placeholder="type name"
-                        aria-label="Type name" aria-describedby="basic-addon">
+                    <input id="name" name="name" type="text" class="form-control @error('name') is-invalid @enderror"
+                        placeholder="type name" aria-label="Type name" aria-describedby="basic-addon"
+                        value="{{ old('name') }}">
                     <button class="btn btn-secondary" type="submit">add type</button>
                 </div>
+                @error('name')
+                <div class="alert alert-danger">{{$message}}</div>
+                @enderror
             </form>
 
         </div>
@@ -73,7 +77,7 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                Do you want to delete {{$type->name}} type permanentely?
+                                                Do you want to delete {{$type->name}} project permanentely?
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
