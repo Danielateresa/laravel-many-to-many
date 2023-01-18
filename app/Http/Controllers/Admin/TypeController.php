@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreTypeRequest;
+use App\Http\Requests\UpdateTypeRequest;
 
 class TypeController extends Controller
 {
@@ -74,13 +75,21 @@ class TypeController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\UpdateTypeRequest  $request
      * @param  \App\Models\Type  $type
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Type $type)
+    public function update(UpdateTypeRequest $request, Type $type)
     {
-        //
+        $validated_data = $request->validated();
+        //type slug
+        $type_slug = Type::createTypeSlug($validated_data['name']);
+
+        $validated_data['slug'] = $type_slug;
+
+        $type->update($validated_data);
+
+        return to_route('admin.types.index')->with('message', "Project type $type->name modified");
     }
 
     /**

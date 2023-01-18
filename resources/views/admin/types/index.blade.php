@@ -9,7 +9,7 @@
 
 <div class="container pt-4">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <h3 class="pb-4">Create a new project Type</h3>
             <form class="" action="{{route('admin.types.store')}}" method="post">
                 @csrf
@@ -25,7 +25,7 @@
             </form>
 
         </div>
-        <div class="col-md-6">
+        <div class="col-md-7">
             @if(session('message'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -52,7 +52,14 @@
                         @forelse($types as $type)
                         <tr class="table-primary">
                             <td scope="row">{{$type->id}}</td>
-                            <td>{{$type->name}}</td>
+                            <td>
+                                <form action="{{route('admin.types.update', $type->slug)}}" method="post">
+                                    @csrf
+                                    @method('PATCH')
+                                    <input type="text" name="name" id="name" class="form-control bg-transparent"
+                                        value="{{$type->name}}">
+                                    <small>Click to edit, press enter to update the type name</small>
+                                </form>
                             <td>{{$type->slug}}</td>
                             <td>-</td>
                             <td>
