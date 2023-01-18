@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Str;
 
 class Technology extends Model
 {
@@ -19,4 +20,13 @@ class Technology extends Model
     {
         return $this->belongsToMany(Project::class);
     }
+
+    protected $fillable = ['name','slug'];
+
+    public static function createTechnologySlug($name)
+    {
+        $technology_slug = Str::slug($name);
+        return $technology_slug;
+    }
+    
 }
